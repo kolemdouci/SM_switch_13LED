@@ -5,7 +5,7 @@ const int inPin = 2;   // choose the input pin (for a pushbutton)
 // Variables will change:
 int buttonState = 0;         // current state of the button
 int lastButtonState = 0;     // previous state of the button
-int pin13state = 1;          // kdyby = 0, tak ledka sviti hned po nahrani programu
+int pin13state = 1;          // kdyby = 0 (LOW), tak ledka sviti hned po nahrani programu
 
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
@@ -38,10 +38,10 @@ void loop() {
         buttonState = digitalRead(inPin);           // read the pushbutton input pin:
         
    if (buttonState != lastButtonState) {            // compare the buttonState to its previous state
-     if (buttonState == HIGH) {                   
-     if (pin13state == 0) pin13state = 1;
+     if (buttonState == HIGH) {                     // kdyby = 0 (LOW), tak ledka sviti hned po nahrani programu
+     if (pin13state == 0) pin13state = 1;           // kdyz se zmeni ButtonState, prehod state pinu13 z 0 na 1 nebo obracene
      else                 pin13state = 0;
-     delay(100);                                      // Delay a little bit to avoid bouncing
+     delay(250);                                    // Delay a little bit to avoid bouncing; pokud moc maly, button neprepina poradne
   }  
     lastButtonState = buttonState;                  // save the current state as the last state, for next time through the loop   
     digitalWrite(LED_BUILTIN, pin13state); 
